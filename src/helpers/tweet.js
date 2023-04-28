@@ -3,7 +3,13 @@ const puppeteer = require("puppeteer");
 const { emailTweet } = require("../helpers/email");
 
 const getAndEmailTweet = async (twitterURL) => {
-    let tweetContent;
+    if (!twitterURL) throw new Error("twitterURL is required");
+
+    if (typeof twitterURL !== "string") throw new Error("twitterURL must be a string");
+
+    if (twitterURL.indexOf("twitter.com") === -1) throw new Error("twitterURL must be a valid twitter URL");
+
+    let tweetsContent = "";
 
     try {
         const browser = await puppeteer.launch();
@@ -12,22 +18,43 @@ const getAndEmailTweet = async (twitterURL) => {
 
         page.setDefaultNavigationTimeout(2 * 60 * 1000);
         await page.goto(twitterURL);
-        await page.waitForSelector('[data-testid="tweet"]');
 
         const selector = '[data-testid="tweet"]';
+        await page.waitForSelector(selector);
 
-        const tweet = await page.$(selector);
+        // Get all tweets after a certain period of time
+        const tweets = await page.$$eval(selector, (tweets) => {
+            const result = [];
 
-        const content = await tweet.evaluate((tweet) => tweet.querySelector('[data-testid="tweetText"]')?.textContent);
+            tweets.forEach((tweet) => {
+                const datetime = tweet.querySelector("time")?.getAttribute("datetime");
 
-        tweetContent = content;
+                if (datetime) {
+                    const date = new Date(datetime);
+                    const specifiedTime = new Date(date.getTime() - 6 * 60 * 60 * 1000);
+
+                    if (date > specifiedTime) {
+                        const content = tweet.querySelector('[data-testid="tweetText"]')?.textContent;
+                        if (content) {
+                            result.push(content);
+                        }
+                    }
+                }
+            });
+
+            return result;
+        });
+
+        tweets.forEach((tweet) => {
+            tweetsContent += tweet + "\n";
+        });
 
         await browser.close();
     } catch (error) {
         console.error(error);
     }
 
-    emailTweet(tweetContent);
+    emailTweet(tweetsContent);
 };
 
 module.exports = { getAndEmailTweet };
