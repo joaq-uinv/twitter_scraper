@@ -11,11 +11,7 @@ WORKDIR /usr/src/app
 # copy only files required to install dependencies for better layer caching
 COPY package*.json ./
 
-# use cache mount to speed up installation of dependencies
-# use npm ci instead of npm install to ensure a reproduceable build.
-RUN --mount=type=cache,target=/usr/src/app/.npm \
-    npm set cache /usr/src/app/.npm && \
-    npm ci
+RUN npm install
 
 # use non-root user
 USER node
