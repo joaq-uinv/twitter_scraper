@@ -16,9 +16,8 @@ RUN npm install
 # use non-root user
 USER node
 
-# copy remaining source code after installing dependencies
 # use --chown on copy commands to set file permissions
-COPY --chown=node:node ./src/ .
+COPY --chown=node:node . .
 
 EXPOSE 5000
 
