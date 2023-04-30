@@ -8,7 +8,11 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+# use non-root user
+USER node
+
+# use --chown on copy commands to set file permissions
+COPY --chown=node:node ./src/ .
 
 EXPOSE 5000
 
