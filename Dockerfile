@@ -1,17 +1,13 @@
 # pin specific version for stability and use alpine for reduced image size
 FROM node:18-alpine AS base
 
-FROM base as production
-
-# set env
-ENV NODE_ENV production
-
 WORKDIR /usr/src/app
 
 # copy only files required to install dependencies for better layer caching
 COPY package*.json ./
 
-RUN npm install
+RUN npm set cache /usr/src/app/.npm && \
+    npm install
 
 # use non-root user
 USER node
