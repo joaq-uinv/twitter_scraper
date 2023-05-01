@@ -78,6 +78,7 @@ jobs:
 
             - name: Replace env variables in the task definition file with their actual values
               run: |
+                  ls -lR $GITHUB_WORKSPACE/.github/workflows
                   sed -i "s|REPLACE_TWITTER_URL|${{ secrets.TWITTER_URL }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
                   sed -i "s|REPLACE_EMAIL_SERVICE|${{ secrets.EMAIL_SERVICE }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
                   sed -i "s|REPLACE_EMAIL_USER|${{ secrets.EMAIL_USER }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
