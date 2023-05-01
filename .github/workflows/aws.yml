@@ -35,7 +35,7 @@ env:
     ECR_REPOSITORY: twitter-scraper # set this to your Amazon ECR repository name
     ECS_SERVICE: twitter-scraper # set this to your Amazon ECS service name
     ECS_CLUSTER: twitter-scraper # set this to your Amazon ECS cluster name
-    ECS_TASK_DEFINITION: ./task-definition.json # set this to the path to your Amazon ECS task definition file, e.g. .aws/task-definition.json
+    ECS_TASK_DEFINITION: .github/workflows/task-definition.json # set this to the path to your Amazon ECS task definition file, e.g. .aws/task-definition.json
     CONTAINER_NAME: twitter-scraper # set this to the name of the container in the containerDefinitions section of your task definition
 
 permissions:
@@ -79,13 +79,13 @@ jobs:
             - name: Replace env variables in the task definition file with their actual values
               run: |
                   ls -lR $GITHUB_WORKSPACE/.github/workflows
-                  sed -i "s|REPLACE_TWITTER_URL|${{ secrets.TWITTER_URL }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_EMAIL_SERVICE|${{ secrets.EMAIL_SERVICE }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_EMAIL_USER|${{ secrets.EMAIL_USER }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_EMAIL_PASSWORD|${{ secrets.EMAIL_PASSWORD }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_FROM_EMAIL|${{ secrets.FROM_EMAIL }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_TO_EMAIL|${{ secrets.TO_EMAIL }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_CRON_FREQUENCY|${{ secrets.CRON_FREQUENCY }}|g" ${{env.ECS_TASK_DEFINITION}} $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+                  sed -i "s|REPLACE_TWITTER_URL|${{ secrets.TWITTER_URL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+                  sed -i "s|REPLACE_EMAIL_SERVICE|${{ secrets.EMAIL_SERVICE }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+                  sed -i "s|REPLACE_EMAIL_USER|${{ secrets.EMAIL_USER }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+                  sed -i "s|REPLACE_EMAIL_PASSWORD|${{ secrets.EMAIL_PASSWORD }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+                  sed -i "s|REPLACE_FROM_EMAIL|${{ secrets.FROM_EMAIL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+                  sed -i "s|REPLACE_TO_EMAIL|${{ secrets.TO_EMAIL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+                  sed -i "s|REPLACE_CRON_FREQUENCY|${{ secrets.CRON_FREQUENCY }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
 
             - name: Fill in the new image ID in the Amazon ECS task definition
               id: task-def
