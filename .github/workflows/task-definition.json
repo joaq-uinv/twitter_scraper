@@ -18,27 +18,27 @@
             "environment": [
                 {
                     "name": "EMAIL_SERVICE",
-                    "value": "EMAIL_SERVICE"
+                    "value": "REPLACE_EMAIL_SERVICE"
                 },
                 {
                     "name": "TWITTER_URL",
-                    "value": "TWITTER_URL"
+                    "value": "REPLACE_TWITTER_URL"
                 },
                 {
                     "name": "TO_EMAIL",
-                    "value": "TO_EMAIL"
+                    "value": "REPLACE_TO_EMAIL"
                 },
                 {
                     "name": "EMAIL_USER",
-                    "value": "EMAIL_USER"
+                    "value": "REPLACE_EMAIL_USER"
                 },
                 {
                     "name": "EMAIL_PASSWORD",
-                    "value": "EMAIL_PASSWORD"
+                    "value": "REPLACE_EMAIL_PASSWORD"
                 },
                 {
                     "name": "CRON_FREQUENCY",
-                    "value": "CRON_FREQUENCY"
+                    "value": "REPLACE_CRON_FREQUENCY"
                 },
                 {
                     "name": "FROM_EMAIL",
