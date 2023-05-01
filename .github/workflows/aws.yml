@@ -78,13 +78,13 @@ jobs:
 
             - name: Replace env variables in the task definition file with their actual values
               run: |
-                  sed -i "s/TWITTER_URL/${{ secrets.TWITTER_URL }}/g" task-definition.json
-                  sed -i "s/EMAIL_SERVICE/${{ secrets.EMAIL_SERVICE }}/g" task-definition.json
-                  sed -i "s/EMAIL_USER/${{ secrets.EMAIL_USER }}/g" task-definition.json
-                  sed -i "s/EMAIL_PASSWORD/${{ secrets.EMAIL_PASSWORD }}/g" task-definition.json
-                  sed -i "s/FROM_EMAIL/${{ secrets.FROM_EMAIL }}/g" task-definition.json
-                  sed -i "s/TO_EMAIL/${{ secrets.TO_EMAIL }}/g" task-definition.json
-                  sed -i "s/CRON_FREQUENCY/${{ secrets.CRON_FREQUENCY }}/g" task-definition.json
+                  sed -i "s|TWITTER_URL|${{ secrets.TWITTER_URL }}|g" task-definition.json
+                  sed -i "s|EMAIL_SERVICE|${{ secrets.EMAIL_SERVICE }}|g" task-definition.json
+                  sed -i "s|EMAIL_USER|${{ secrets.EMAIL_USER }}|g" task-definition.json
+                  sed -i "s|EMAIL_PASSWORD|${{ secrets.EMAIL_PASSWORD }}|g" task-definition.json
+                  sed -i "s|FROM_EMAIL|${{ secrets.FROM_EMAIL }}|g" task-definition.json
+                  sed -i "s|TO_EMAIL|${{ secrets.TO_EMAIL }}|g" task-definition.json
+                  sed -i "s|CRON_FREQUENCY|${{ secrets.CRON_FREQUENCY }}|g" task-definition.json
 
             - name: Fill in the new image ID in the Amazon ECS task definition
               id: task-def
