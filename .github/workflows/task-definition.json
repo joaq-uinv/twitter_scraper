@@ -9,7 +9,7 @@
                 {
                     "name": "twitter-scraper-5000-tcp",
                     "containerPort": 5000,
-                    "hostPort": 0,
+                    "hostPort": 5000,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
