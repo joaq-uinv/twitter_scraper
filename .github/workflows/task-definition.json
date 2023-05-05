@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:sa-east-1:793106969048:task-definition/twitter-scraper:7",
+    "taskDefinitionArn": "arn:aws:ecs:sa-east-1:793106969048:task-definition/twitter-scraper:14",
     "containerDefinitions": [
         {
             "name": "twitter-scraper",
