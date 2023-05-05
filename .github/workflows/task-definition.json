@@ -61,10 +61,10 @@
         }
     ],
     "family": "twitter-scraper",
-    "taskRoleArn": "arn:aws:iam::793106969048:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::793106969048:role/twitter_ecs",
     "executionRoleArn": "arn:aws:iam::793106969048:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 7,
+    "revision": 9,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
