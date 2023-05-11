@@ -48,6 +48,7 @@
         }
     ],
     "family": "twitter_scraper",
+    "taskRoleArn": "arn:aws:iam::793106969048:role/ECSRoleforEC2",
     "executionRoleArn": "arn:aws:iam::793106969048:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "revision": 1,
