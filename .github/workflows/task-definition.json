@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:sa-east-1:793106969048:task-definition/twitter-scraper:14",
+    "taskDefinitionArn": "arn:aws:ecs:sa-east-1:793106969048:task-definition/twitter_scraper:1",
     "containerDefinitions": [
         {
             "name": "twitter-scraper",
@@ -21,14 +21,6 @@
                     "value": "REPLACE_EMAIL_SERVICE"
                 },
                 {
-                    "name": "TWITTER_URL",
-                    "value": "REPLACE_TWITTER_URL"
-                },
-                {
-                    "name": "TO_EMAIL",
-                    "value": "REPLACE_TO_EMAIL"
-                },
-                {
                     "name": "EMAIL_USER",
                     "value": "REPLACE_EMAIL_USER"
                 },
@@ -37,8 +29,12 @@
                     "value": "REPLACE_EMAIL_PASSWORD"
                 },
                 {
-                    "name": "CRON_FREQUENCY",
-                    "value": "REPLACE_CRON_FREQUENCY"
+                    "name": "TWITTER_URL",
+                    "value": "REPLACE_TWITTER_URL"
+                },
+                {
+                    "name": "TO_EMAIL",
+                    "value": "REPLACE_TO_EMAIL"
                 },
                 {
                     "name": "FROM_EMAIL",
@@ -48,40 +44,18 @@
             "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/twitter-scraper",
-                    "awslogs-region": "sa-east-1",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            }
+            "ulimits": []
         }
     ],
-    "family": "twitter-scraper",
-    "taskRoleArn": "arn:aws:iam::793106969048:role/twitter_scraper",
+    "family": "twitter_scraper",
     "executionRoleArn": "arn:aws:iam::793106969048:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 9,
+    "revision": 1,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
         {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
             "name": "com.amazonaws.ecs.capability.ecr-auth"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
         },
         {
             "name": "ecs.capability.execution-role-ecr-pull"
@@ -91,21 +65,18 @@
         },
         {
             "name": "ecs.capability.task-eni"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
         }
     ],
     "placementConstraints": [],
     "compatibilities": ["EC2", "FARGATE"],
-    "requiresCompatibilities": ["FARGATE"],
+    "requiresCompatibilities": ["EC2"],
     "cpu": "256",
     "memory": "512",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-05-02T18:54:21.508Z",
+    "registeredAt": "2023-05-11T12:32:00.840Z",
     "registeredBy": "arn:aws:iam::793106969048:root",
     "tags": []
 }
