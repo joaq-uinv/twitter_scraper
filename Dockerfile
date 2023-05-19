@@ -8,6 +8,9 @@ COPY package*.json ./
 
 RUN npm install
 
+# copy the source code
+COPY ./src .
+
 # create final image
 FROM public.ecr.aws/lambda/nodejs:16
 
@@ -17,7 +20,7 @@ WORKDIR ${LAMBDA_TASK_ROOT}
 USER node
 
 # use --chown on copy commands to set file permissions
-COPY --chown=node:node --from=builder ./src/ .
+COPY --chown=node:node --from=builder /usr/src/app/ .
 
 EXPOSE 5000
 
