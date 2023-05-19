@@ -17,7 +17,10 @@ FROM public.ecr.aws/lambda/nodejs:16
 WORKDIR ${LAMBDA_TASK_ROOT}
 
 # use non-root user
+# create a custom user with UID and GID
+RUN groupadd -r node && useradd -r -g node node
 USER node
+
 
 # use --chown on copy commands to set file permissions
 COPY --chown=node:node --from=builder /usr/src/app/ .
