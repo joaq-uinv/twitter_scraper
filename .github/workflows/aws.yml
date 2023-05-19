@@ -66,7 +66,7 @@ jobs:
               id: build-image
               env:
                   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-                  ECR_REPOSITORY: twitter-scraper
+                  ECR_REPOSITORY: twitter_scraper
                   IMAGE_TAG: ${{ github.sha }}
               run: |
                   # Build a docker container and
@@ -75,30 +75,31 @@ jobs:
                   docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
                   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
                   echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+                  aws lambda update-function-code --function-name twitter_scraper --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG.dkr.ecr.sa-east-1.amazonaws.com/example:latest
 
-            - name: Replace env variables in the task definition file with their actual values
-              run: |
-                  ls -lR $GITHUB_WORKSPACE/.github/workflows
-                  sed -i "s|REPLACE_TWITTER_URL|${{ secrets.TWITTER_URL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_EMAIL_SERVICE|${{ secrets.EMAIL_SERVICE }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_EMAIL_USER|${{ secrets.EMAIL_USER }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_EMAIL_PASSWORD|${{ secrets.EMAIL_PASSWORD }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_FROM_EMAIL|${{ secrets.FROM_EMAIL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_TO_EMAIL|${{ secrets.TO_EMAIL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
-                  sed -i "s|REPLACE_CRON_FREQUENCY|${{ secrets.CRON_FREQUENCY }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+            # - name: Replace env variables in the task definition file with their actual values
+            #   run: |
+            #       ls -lR $GITHUB_WORKSPACE/.github/workflows
+            #       sed -i "s|REPLACE_TWITTER_URL|${{ secrets.TWITTER_URL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+            #       sed -i "s|REPLACE_EMAIL_SERVICE|${{ secrets.EMAIL_SERVICE }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+            #       sed -i "s|REPLACE_EMAIL_USER|${{ secrets.EMAIL_USER }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+            #       sed -i "s|REPLACE_EMAIL_PASSWORD|${{ secrets.EMAIL_PASSWORD }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+            #       sed -i "s|REPLACE_FROM_EMAIL|${{ secrets.FROM_EMAIL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+            #       sed -i "s|REPLACE_TO_EMAIL|${{ secrets.TO_EMAIL }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
+            #       sed -i "s|REPLACE_CRON_FREQUENCY|${{ secrets.CRON_FREQUENCY }}|g" $GITHUB_WORKSPACE/.github/workflows/task-definition.json
 
-            - name: Fill in the new image ID in the Amazon ECS task definition
-              id: task-def
-              uses: aws-actions/amazon-ecs-render-task-definition@v1
-              with:
-                  task-definition: ${{ env.ECS_TASK_DEFINITION }}
-                  container-name: ${{ env.CONTAINER_NAME }}
-                  image: ${{ steps.build-image.outputs.image }}
+            # - name: Fill in the new image ID in the Amazon ECS task definition
+            #   id: task-def
+            #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+            #   with:
+            #       task-definition: ${{ env.ECS_TASK_DEFINITION }}
+            #       container-name: ${{ env.CONTAINER_NAME }}
+            #       image: ${{ steps.build-image.outputs.image }}
 
-            - name: Deploy Amazon ECS task definition
-              uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-              with:
-                  task-definition: ${{ steps.task-def.outputs.task-definition }}
-                  service: ${{ env.ECS_SERVICE }}
-                  cluster: ${{ env.ECS_CLUSTER }}
-                  wait-for-service-stability: 500
+            # - name: Deploy Amazon ECS task definition
+            #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+            #   with:
+            #       task-definition: ${{ steps.task-def.outputs.task-definition }}
+            #       service: ${{ env.ECS_SERVICE }}
+            #       cluster: ${{ env.ECS_CLUSTER }}
+            #       wait-for-service-stability: 500
