@@ -18,7 +18,7 @@ WORKDIR ${LAMBDA_TASK_ROOT}
 
 # use non-root user
 # create a custom user with UID and GID
-RUN groupadd -r node && useradd -r -g node node
+RUN addgroup -S node && adduser -S -G node node
 USER node
 
 
