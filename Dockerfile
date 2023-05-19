@@ -14,20 +14,20 @@ COPY ./src .
 # create final image
 FROM public.ecr.aws/lambda/nodejs:16
 
-# use non-root user
-USER node
+# # use non-root user
+# USER node
 
-# set custom UID and GID values
-ARG USER_ID=1000
-ARG GROUP_ID=1000
+# # set custom UID and GID values
+# ARG USER_ID=1000
+# ARG GROUP_ID=1000
 
-# update ownership of the home directory
-RUN sudo chown -R $USER_ID:$GROUP_ID /home/node
+# # update ownership of the home directory
+# RUN sudo chown -R $USER_ID:$GROUP_ID /home/node
 
 WORKDIR ${LAMBDA_TASK_ROOT}
 
 # copy from the previous stage
-COPY --chown=node:node --from=builder /usr/src/app/ .
+COPY --from=builder /usr/src/app/ .
 
 EXPOSE 5000
 
