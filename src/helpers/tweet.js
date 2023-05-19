@@ -2,6 +2,12 @@ const puppeteer = require("puppeteer");
 
 const { emailTweet } = require("../helpers/email");
 
+/**
+ *@description Get tweets from a given twitter URL and email it to the user
+ * @param {string} twitterURL
+ * @returns {Promise<void>}
+ */
+
 const getAndEmailTweet = async (twitterURL) => {
     if (!twitterURL) throw new Error("twitterURL is required");
 

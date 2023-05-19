@@ -12,5 +12,4 @@ module.exports = {
     },
     fromEmail: process.env.FROM_EMAIL,
     toEmail: process.env.TO_EMAIL,
-    cronFrequency: process.env.CRON_FREQUENCY,
 };
