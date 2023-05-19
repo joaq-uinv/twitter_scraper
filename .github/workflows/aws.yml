@@ -75,7 +75,7 @@ jobs:
                   docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
                   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
                   echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-                  aws lambda update-function-code --function-name twitter_scraper --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG.dkr.ecr.sa-east-1.amazonaws.com/twitter_scraper:latest
+                  aws lambda update-function-code --function-name twitter_scraper --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
             # - name: Replace env variables in the task definition file with their actual values
             #   run: |
