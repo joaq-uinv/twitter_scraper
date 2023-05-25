@@ -1,7 +1,13 @@
 FROM public.ecr.aws/lambda/nodejs:16
 
-COPY package*.json ./
+# Set the working directory
+WORKDIR /var/task
 
-RUN npm install
+# Copy the entire project
+COPY . .
 
+# Set the entrypoint to the Lambda runtime
+ENTRYPOINT [ "/lambda-entrypoint.sh" ]
+
+# Set the handler command
 CMD [ "app.handler" ]
