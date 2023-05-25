@@ -1,10 +1,10 @@
-const { cronFrequency, twitterURL } = require("./config");
-const { initCron } = require("./scheduler");
+const { twitterURL } = require("./config");
+const handler = require("./handlers");
 
-const init = () => {
-    initCron({ cronFrequency, twitterURL });
+const init = async () => {
+    console.log("Starting...");
 
-    console.log("Scheduler running");
+    await handler.getAndEmailTweet(twitterURL);
 };
 
-init();
+module.exports = { init };
