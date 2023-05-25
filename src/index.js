@@ -1,8 +1,8 @@
 const { twitterURL } = require("./config");
-const { getAndEmailTweet } = require("./helpers/tweet");
+const handler = require("./handlers");
 
 const init = async () => {
-    await getAndEmailTweet(twitterURL);
+    await handler.getAndEmailTweet(twitterURL);
 };
 
 init();
