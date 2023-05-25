@@ -29,6 +29,6 @@ WORKDIR ${LAMBDA_TASK_ROOT}
 # copy from the previous stage
 COPY --from=builder /usr/src/app/ .
 
-EXPOSE 5000
+# EXPOSE 5000
 
 ENTRYPOINT [ "npm", "start" ]
