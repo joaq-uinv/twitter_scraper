@@ -4,4 +4,4 @@ COPY package*.json ./
 
 RUN npm install
 
-CMD [ "index.handler" ]
+CMD [ "app.handler" ]
