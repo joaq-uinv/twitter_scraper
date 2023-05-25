@@ -6,6 +6,9 @@ WORKDIR /var/task
 # Copy the entire project
 COPY . .
 
+# Install dependencies
+RUN npm install
+
 # Set the entrypoint to the Lambda runtime
 ENTRYPOINT [ "/lambda-entrypoint.sh" ]
 
