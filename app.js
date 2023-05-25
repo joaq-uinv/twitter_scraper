@@ -1,7 +1,10 @@
 const { init } = require("./src");
 
-exports.handler = async (event, context) => {
+exports.handler = (event, context) => {
     console.log(`Event: ${event},  Context: ${context}`);
 
-    await init();
+    return new Promise((resolve, reject) => {
+        resolve(init());
+        reject((err) => console.error(err));
+    });
 };
