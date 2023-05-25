@@ -1,7 +1,7 @@
 #build stage
 FROM public.ecr.aws/lambda/nodejs:16 as builder
 
-WORKDIR /usr/src/app
+WORKDIR /var/task
 
 # copy only files required to install dependencies for better layer caching
 COPY package*.json ./
@@ -27,7 +27,7 @@ FROM public.ecr.aws/lambda/nodejs:16
 WORKDIR ${LAMBDA_TASK_ROOT}
 
 # copy from the previous stage
-COPY --from=builder /usr/src/app/ .
+COPY --from=builder /var/task/ .
 
 EXPOSE 5000
 
