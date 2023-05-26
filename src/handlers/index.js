@@ -1,4 +1,6 @@
-const puppeteer = require("puppeteer");
+const puppeteerExtra = require("puppeteer-extra");
+const chromium = require("@sparticuz/chromium");
+
 const nodemailer = require("nodemailer");
 
 const { email, fromEmail, toEmail } = require("../config");
@@ -25,7 +27,13 @@ class Handler {
         let tweetsContent = "";
 
         try {
-            const browser = await puppeteer.launch();
+            const browser = await puppeteerExtra.launch({
+                args: chromium.args,
+                defaultViewport: chromium.defaultViewport,
+                executablePath: await chromium.executablePath(),
+                headless: chromium.headless,
+                ignoreHTTPSErrors: true,
+            });
 
             const page = await browser.newPage();
 
