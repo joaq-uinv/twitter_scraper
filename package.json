@@ -11,8 +11,10 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@sparticuz/chromium": "^112.0.2",
         "dotenv": "^16.0.3",
         "nodemailer": "^6.9.1",
-        "puppeteer": "^19.11.1"
+        "puppeteer-core": "19.8",
+        "puppeteer-extra": "^3.3.6"
     }
 }
