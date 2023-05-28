@@ -1,15 +1,21 @@
-const puppeteerExtra = require("puppeteer-extra");
-const chromium = require("@sparticuz/chromium");
-
 const nodemailer = require("nodemailer");
 
-const { email, fromEmail, toEmail } = require("../config");
+const config = require("../config");
 
 class Handler {
-    constructor(email, fromEmail, toEmail) {
+    /**
+     * @param {string} email
+     * @param {string} fromEmail
+     * @param {string} toEmail
+     * @param {string} env
+     * @param {any} puppeteer
+     */
+    constructor(email, fromEmail, toEmail, env, puppeteer) {
         this.email = email;
         this.fromEmail = fromEmail;
         this.toEmail = toEmail;
+        this.env = env;
+        this.puppeteer = puppeteer;
     }
 
     /**
@@ -27,13 +33,19 @@ class Handler {
         let tweetsContent = "";
 
         try {
-            const browser = await puppeteerExtra.launch({
-                args: chromium.args,
-                defaultViewport: chromium.defaultViewport,
-                executablePath: await chromium.executablePath(),
-                headless: chromium.headless,
-                ignoreHTTPSErrors: true,
-            });
+            let browser;
+
+            if (this.env === "development") {
+                browser = await this.puppeteer.lib.launch();
+            } else {
+                browser = await this.puppeteer.lib.launch({
+                    args: this.puppeteer.chromium.args,
+                    defaultViewport: this.puppeteer.chromium.defaultViewport,
+                    executablePath: await this.puppeteer.chromium.executablePath(),
+                    headless: this.puppeteer.chromium.headless,
+                    ignoreHTTPSErrors: true,
+                });
+            }
 
             const page = await browser.newPage();
 
@@ -87,16 +99,16 @@ class Handler {
         if (!tweet) throw new Error("There is no tweet to email");
 
         const transporter = nodemailer.createTransport({
-            service: email.service,
+            service: this.email.service,
             auth: {
-                user: email.user,
-                pass: email.password,
+                user: this.email.user,
+                pass: this.email.password,
             },
         });
 
         const message = {
-            from: fromEmail,
-            to: toEmail,
+            from: this.fromEmail,
+            to: this.toEmail,
             subject: "Nuevo tweet",
             text: tweet,
         };
@@ -111,6 +123,6 @@ class Handler {
     }
 }
 
-const handler = new Handler(email, fromEmail, toEmail);
+const handler = new Handler(config.email, config.fromEmail, config.toEmail, process.env.NODE_ENV, config.puppeteer);
 
 module.exports = handler;
